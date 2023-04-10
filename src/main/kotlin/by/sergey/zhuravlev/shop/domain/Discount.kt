@@ -4,6 +4,8 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 import javax.persistence.*
 
+
+//todo сделать более гибкую систему скидок, возжность сетать их на категорию, возможность установить процентную скидку.
 @Entity
 @Table(name = "discounts")
 data class Discount(
@@ -12,15 +14,15 @@ data class Discount(
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   var id: Long? = null,
 
-  @ManyToOne
-  @JoinColumn(name = "product_id")
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "product_id", nullable = false)
   var product: Product? = null,
 
   @Column(name = "price", precision = 16, scale = 2, nullable = false)
-  var price: BigDecimal? = null,
+  var price: BigDecimal,
 
   @Column(name = "price_currency", length = 3, nullable = false)
-  var priceCurrency: String? = null,
+  var priceCurrency: String,
 
   @Column(name = "start_at", nullable = false)
   var startAt: LocalDateTime,

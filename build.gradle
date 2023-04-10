@@ -14,6 +14,7 @@ sourceCompatibility = '11'
 
 repositories {
 	mavenCentral()
+	maven { url "https://jitpack.io" }
 }
 
 dependencies {
@@ -24,9 +25,9 @@ dependencies {
 	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
 	implementation 'org.jetbrains.kotlin:kotlin-reflect'
 	implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+	implementation 'com.github.dergey:tuples:0.0.2'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework:spring-webflux'
 	testImplementation 'org.springframework.graphql:spring-graphql-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 }

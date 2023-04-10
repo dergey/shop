@@ -41,7 +41,7 @@
         "name_ru": "Мебель для спальни"
       }
     }
-  }
+  },
   "attributes": [
     {
       "type": "COLOR",
@@ -135,7 +135,7 @@ _(Учесть ползунок для цен)_
 ```json
 {
   "amount": "100 BYN",
-  "discout": "30 BYN",
+  "discount": "30 BYN",
   "products": [
     {
       "id": 1,

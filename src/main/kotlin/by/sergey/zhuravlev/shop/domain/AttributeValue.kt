@@ -6,15 +6,16 @@ import javax.persistence.*
 @Table(name = "attribute_values")
 data class AttributeValue(
 
+  //todo убрать излишний id!
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  var id: Long? = null,
+  var id: Long,
 
   @ManyToOne
   @JoinColumn(name = "attribute_id", nullable = false)
-  var attribute: Attribute? = null,
+  var attribute: Attribute,
 
   @Column(name = "value", length = 100, nullable = false)
-  var value: String? = null
+  var value: String
 
 )

@@ -15,22 +15,22 @@ data class Image(
   var id: Long? = null,
 
   @Column(name = "mime_type", length = 128, nullable = false, updatable = false)
-  var mimeType: String? = null,
+  var mimeType: String,
 
   @Column(name = "height", nullable = false, updatable = false)
-  var height: Int? = null,
+  var height: Int,
 
   @Column(name = "width", nullable = false, updatable = false)
-  var width: Int? = null,
+  var width: Int,
 
   @Convert(converter = DataSizeConverter::class)
   @Column(name = "data_size", nullable = false, updatable = false)
-  var dataSize: DataSize? = null,
+  var dataSize: DataSize,
 
   @Column(name = "storage_id", length = 80, nullable = false, updatable = false)
-  var storageId: String? = null,
+  var storageId: String,
 
   @Column(name = "create_at", nullable = false, updatable = false)
-  var createAt: LocalDateTime? = null
+  var createAt: LocalDateTime
 
 )

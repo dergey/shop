@@ -13,17 +13,17 @@ data class Order(
   var id: Long? = null,
 
   @Column(name = "status", length = 16, nullable = false)
-  var status: OrderStatus? = null,
+  var status: OrderStatus,
 
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = true)
   var user: User? = null,
 
   @Column(name = "recipient_phone", length = 15, nullable = false)
-  var recipientPhone: String? = null,
+  var recipientPhone: String,
 
   @Column(name = "recipient_name", length = 200, nullable = false)
-  var recipientName: String? = null,
+  var recipientName: String,
 
   @Column(name = "amount", precision = 16, scale = 2, nullable = false)
   var amount: BigDecimal,
@@ -32,13 +32,13 @@ data class Order(
   var amountCurrency: BigDecimal,
 
   @Column(name = "delivery", length = 16, nullable = false)
-  var delivery: DeliveryType? = null,
+  var delivery: DeliveryType,
 
   @Column(name = "create_at", nullable = false)
-  var createAt: LocalDateTime? = null,
+  var createAt: LocalDateTime,
 
   @Column(name = "update_at", nullable = false)
-  var updateAt: LocalDateTime? = null,
+  var updateAt: LocalDateTime,
 
   @Column(name = "delivery_at")
   var deliveryAt: LocalDateTime? = null,
@@ -47,5 +47,5 @@ data class Order(
   var completeAt: LocalDateTime? = null,
 
   @OneToMany(mappedBy = "id.order")
-  var items: List<OrderItem>? = null
+  var items: List<OrderItem>
 )

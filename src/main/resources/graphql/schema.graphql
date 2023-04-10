@@ -1,0 +1,127 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  getProduct(productId: Long!): Product!
+  getProducts(sort: ProductSortEntry, limit: Long, offset: Long): [Product!]!
+  getProductsByFilter(filter: ProductFilterInput!): [Product!]!
+}
+
+type Mutation {
+  addProductToUserCart(userId: Long!, productId: Long!): Cart!
+}
+
+type Cart {
+  secret: String!
+  amount: String!
+  discount: String!
+  items: [CartItem!]!
+}
+
+type CartItem {
+  count: Int!
+  amount: String!
+  discount: String!
+  product: Product!
+}
+
+type Product {
+  id: Long!
+  title: String!
+  description: String
+  price: String!
+  originalPrice: String
+  availability: Availability!
+  availableAt: LocalDate
+  createAt: LocalDateTime!
+  updateAt: LocalDateTime!
+  catalog: Catalog!
+  images: [Image!]!
+  attributes: [ProductAttribute!]!
+}
+
+type ProductAttribute {
+  name: String!
+  value: String!
+}
+
+type Attribute {
+  name: String!
+  values: [String!]!
+}
+
+type Catalog {
+  id: Long!
+  name: String!
+  # todo Разве удобно? Стоит передавать как список! GraphQL не позволяет сделать это вложенной структурой?
+  parent: Catalog
+  attributes: [Attribute!]!
+}
+
+type Image {
+  id: Long!
+  mimeType: String!
+  height: Int!
+  width: Int!
+  dataSize: String!
+  createAt: LocalDateTime!
+}
+
+input ProductFilterInput {
+  entries: [ProductFilterEntry]
+  sort: ProductSortEntry
+  limit: Long
+  offset: Long
+}
+
+input ProductFilterEntry {
+  type: ProductFilterType!
+  values: [Object]!
+}
+
+input ProductSortEntry {
+  field: ProductSortField!
+  order: SortOrder!
+}
+
+# Подставляйте в ProductFilterEntry { values: [xxx, ...] }
+input AttributeFilterEntry {
+  name: String!
+  values: [String!]!
+}
+
+enum Availability {
+  IN_STOCK
+  NOT_AVAILABLE
+  ON_ORDER
+}
+
+enum ProductFilterType {
+  ID
+  QUERY
+  PRICE_FROM
+  PRICE_TO
+  AVAILABILITY
+  ATTRIBUTES
+}
+
+enum ProductSortField {
+  ID
+  PRICE
+  CREATE_AT
+  # SCORE
+  # REVIEW_COUNT
+}
+
+enum SortOrder {
+  ASC
+  DESC
+}
+
+scalar Long
+scalar Object
+scalar BigDecimal
+scalar LocalDate
+scalar LocalDateTime

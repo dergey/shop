@@ -18,7 +18,7 @@ data class User(
   var phone: String? = null,
 
   @Column(name = "password", length = 60, nullable = false)
-  var password: String? = null,
+  var password: String,
 
   @ManyToMany
   @JoinTable(
@@ -29,9 +29,9 @@ data class User(
   var addresses: List<Address>? = null,
 
   @Column(name = "create_at", nullable = false, updatable = false)
-  var createAt: LocalDateTime? = null,
+  var createAt: LocalDateTime,
 
   @Column(name = "update_at", nullable = false)
-  var updateAt: LocalDateTime? = null
+  var updateAt: LocalDateTime
 
 )

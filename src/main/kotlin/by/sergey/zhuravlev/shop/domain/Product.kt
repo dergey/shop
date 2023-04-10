@@ -13,50 +13,40 @@ data class Product(
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   var id: Long? = null,
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "catalog_id")
   var catalog: Catalog? = null,
 
   @Column(name = "title", length = 140, nullable = false)
-  var title: String? = null,
+  var title: String,
 
   @Lob
   @Column(name = "description", length = 512, nullable = false)
-  var description: String? = null,
+  var description: String,
 
   @Column(name = "price", precision = 16, scale = 2, nullable = false)
-  var price: BigDecimal? = null,
+  var price: BigDecimal,
 
   @Column(name = "price_currency", length = 3, nullable = false)
-  var priceCurrency: String? = null,
+  var priceCurrency: String,
 
   @Enumerated(EnumType.STRING)
   @Column(name = "availability", length = 16, nullable = false)
-  var availability: Availability? = null,
+  var availability: Availability,
 
   @Column(name = "available_at", nullable = false)
-  var availableAt: LocalDate? = null,
+  var availableAt: LocalDate,
 
   @Column(name = "create_at", nullable = false)
-  var createAt: LocalDateTime? = null,
+  var createAt: LocalDateTime,
 
   @Column(name = "update_at", nullable = false)
-  var updateAt: LocalDateTime? = null,
+  var updateAt: LocalDateTime,
 
-  @ManyToMany
-  @JoinTable(
-    name = "product_images",
-    joinColumns = [JoinColumn(name = "product_id")],
-    inverseJoinColumns = [JoinColumn(name = "image_id")]
-  )
-  var images: List<Image>? = null,
+  @OneToMany(mappedBy = "id.product")
+  var images: List<ProductImage>,
 
-  @ManyToMany
-  @JoinTable(
-    name = "product_attribute_values",
-    joinColumns = [JoinColumn(name = "product_id")],
-    inverseJoinColumns = [JoinColumn(name = "attribute_value_id")]
-  )
-  var attributeValues: List<AttributeValue>
+  @OneToMany(mappedBy = "id.product")
+  var attributeValues: List<ProductAttributeValue>
 
 )

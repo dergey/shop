@@ -8,16 +8,16 @@ data class Attribute(
 
   @Id
   @Column(name = "code", length = 30, nullable = false)
-  var code: String? = null,
+  var code: String,
 
   @Column(name = "title", length = 100, nullable = false)
-  var title: String? = null,
+  var title: String,
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "catalog_id")
   var catalog: Catalog? = null,
 
   @OneToMany(mappedBy = "attribute")
-  var values: List<AttributeValue>? = null
+  var values: List<AttributeValue>
 
 )

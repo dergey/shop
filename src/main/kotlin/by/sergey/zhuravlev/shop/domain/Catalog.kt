@@ -11,13 +11,13 @@ data class Catalog(
   var id: Long? = null,
 
   @Column(name = "title", length = 100, nullable = false)
-  var title: String? = null,
+  var title: String,
 
   @ManyToOne
   @JoinColumn(name = "parent_id")
   var parent: Catalog? = null,
 
   @OneToMany(mappedBy = "catalog")
-  var attributes: List<Attribute>? = null
+  var attributes: List<Attribute>
 
 )
