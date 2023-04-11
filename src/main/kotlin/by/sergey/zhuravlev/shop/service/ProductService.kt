@@ -4,15 +4,13 @@ import by.sergey.zhuravlev.shop.factory.CatalogModelFactory.buildCatalogModel
 import by.sergey.zhuravlev.shop.factory.ImageModelFactory.buildImageModel
 import by.sergey.zhuravlev.shop.factory.ProductAttributeModelFactory.buildProductAttributeModel
 import by.sergey.zhuravlev.shop.factory.ProductModelFactory.buildProductModel
-import by.sergey.zhuravlev.shop.model.CatalogModel
-import by.sergey.zhuravlev.shop.model.ImageModel
-import by.sergey.zhuravlev.shop.model.ProductAttributeModel
-import by.sergey.zhuravlev.shop.model.ProductModel
+import by.sergey.zhuravlev.shop.model.*
 import by.sergey.zhuravlev.shop.repository.*
 import by.sergey.zhuravlev.shop.uilts.component1
 import by.sergey.zhuravlev.shop.uilts.component2
 import by.sergey.zhuravlev.shop.uilts.withNullable
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -35,6 +33,21 @@ class ProductService(
         buildProductModel(product, discount)
       }
       ?: throw NotFoundException()
+  }
+
+  @Transactional(readOnly = true)
+  fun getAllProducts(sort: ProductSortEntry, limit: Long, offset: Long): List<ProductModel> {
+    return productRepository.findAll(
+      PageRequest.of(
+        (offset / limit).toInt(),
+        limit.toInt(),
+        sort.order, sort.field.columnName
+      )
+    )
+      .map { product ->
+        buildProductModel(product, null)
+      }
+      .toList()
   }
 
   @Transactional(readOnly = true)

@@ -34,9 +34,9 @@ type Product {
   price: String!
   originalPrice: String
   availability: Availability!
-  availableAt: LocalDate
-  createAt: LocalDateTime!
-  updateAt: LocalDateTime!
+  availableAt: Date
+  createAt: DateTime!
+  updateAt: DateTime!
   catalog: Catalog!
   images: [Image!]!
   attributes: [ProductAttribute!]!
@@ -66,7 +66,7 @@ type Image {
   height: Int!
   width: Int!
   dataSize: String!
-  createAt: LocalDateTime!
+  createAt: DateTime!
 }
 
 input ProductFilterInput {
@@ -123,5 +123,5 @@ enum SortOrder {
 scalar Long
 scalar Object
 scalar BigDecimal
-scalar LocalDate
-scalar LocalDateTime
+scalar Date
+scalar DateTime

@@ -1,9 +1,6 @@
 package by.sergey.zhuravlev.shop.handler
 
-import by.sergey.zhuravlev.shop.model.CatalogModel
-import by.sergey.zhuravlev.shop.model.ImageModel
-import by.sergey.zhuravlev.shop.model.ProductAttributeModel
-import by.sergey.zhuravlev.shop.model.ProductModel
+import by.sergey.zhuravlev.shop.model.*
 import by.sergey.zhuravlev.shop.service.ProductService
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.QueryMapping
@@ -18,6 +15,15 @@ class ProductFetcher(
   @QueryMapping
   fun getProduct(@Argument productId: Long): ProductModel {
     return productService.getProductById(productId)
+  }
+
+  @QueryMapping
+  fun getProducts(
+    @Argument sort: ProductSortEntry,
+    @Argument limit: Long,
+    @Argument offset: Long
+  ): List<ProductModel> {
+    return productService.getAllProducts(sort, limit, offset)
   }
 
   @SchemaMapping(typeName = "Product", field = "catalog")
