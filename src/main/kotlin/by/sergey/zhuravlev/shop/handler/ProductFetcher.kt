@@ -5,9 +5,9 @@ import by.sergey.zhuravlev.shop.service.ProductService
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.QueryMapping
 import org.springframework.graphql.data.method.annotation.SchemaMapping
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Controller
 
-@Component
+@Controller
 class ProductFetcher(
   private val productService: ProductService,
 ) {
@@ -19,11 +19,18 @@ class ProductFetcher(
 
   @QueryMapping
   fun getProducts(
-    @Argument sort: ProductSortEntry,
-    @Argument limit: Long,
-    @Argument offset: Long
+    @Argument sort: ProductSortEntry?,
+    @Argument limit: Long?,
+    @Argument offset: Long?
   ): List<ProductModel> {
     return productService.getAllProducts(sort, limit, offset)
+  }
+
+  @QueryMapping
+  fun getProductsByFilter(
+    @Argument filter: ProductFilterInput
+  ): List<ProductModel> {
+    return productService.getAllProducts(filter.entries, filter.sort, filter.limit, filter.offset)
   }
 
   @SchemaMapping(typeName = "Product", field = "catalog")

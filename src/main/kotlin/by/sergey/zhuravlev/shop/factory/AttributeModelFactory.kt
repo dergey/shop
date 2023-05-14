@@ -1,14 +1,14 @@
 package by.sergey.zhuravlev.shop.factory
 
-import by.sergey.zhuravlev.shop.domain.Attribute
+import by.sergey.zhuravlev.shop.domain.CatalogAttribute
 import by.sergey.zhuravlev.shop.model.AttributeModel
 
 object AttributeModelFactory {
 
-  fun buildAttributeModel(attribute: Attribute): AttributeModel {
+  fun buildAttributeModel(catalogAttribute: CatalogAttribute): AttributeModel {
     return AttributeModel(
-      name = attribute.title,
-      values = attribute.values.map { it.value }
+      name = catalogAttribute.title,
+      values = catalogAttribute.values.map { it.id.value }
     )
   }
 

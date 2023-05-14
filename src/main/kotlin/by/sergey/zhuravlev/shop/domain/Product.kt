@@ -1,11 +1,13 @@
 package by.sergey.zhuravlev.shop.domain
 
+import com.querydsl.core.annotations.QueryEntity
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
+@QueryEntity
 @Table(name = "products")
 data class Product(
 
@@ -34,8 +36,8 @@ data class Product(
   @Column(name = "availability", length = 16, nullable = false)
   var availability: Availability,
 
-  @Column(name = "available_at", nullable = false)
-  var availableAt: LocalDate,
+  @Column(name = "available_at")
+  var availableAt: LocalDate? = null,
 
   @Column(name = "create_at", nullable = false)
   var createAt: LocalDateTime,

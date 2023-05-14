@@ -4,9 +4,16 @@ schema {
 }
 
 type Query {
+  # Query to get the product by id
   getProduct(productId: Long!): Product!
+  # Query to get the products with sort and pagination
   getProducts(sort: ProductSortEntry, limit: Long, offset: Long): [Product!]!
+  # Query to get the products by filter
   getProductsByFilter(filter: ProductFilterInput!): [Product!]!
+  # Query to get the root catalog
+  getRootCatalog: Catalog!
+  # Query to get the catalog by id
+  getCatalog(catalogId: Long!): Catalog!
 }
 
 type Mutation {
@@ -35,8 +42,8 @@ type Product {
   originalPrice: String
   availability: Availability!
   availableAt: Date
-  createAt: DateTime!
-  updateAt: DateTime!
+  createAt: LocalDateTime!
+  updateAt: LocalDateTime!
   catalog: Catalog!
   images: [Image!]!
   attributes: [ProductAttribute!]!
@@ -57,6 +64,7 @@ type Catalog {
   name: String!
   # todo Разве удобно? Стоит передавать как список! GraphQL не позволяет сделать это вложенной структурой?
   parent: Catalog
+  children: [Catalog!]!
   attributes: [Attribute!]!
 }
 
@@ -66,7 +74,7 @@ type Image {
   height: Int!
   width: Int!
   dataSize: String!
-  createAt: DateTime!
+  createAt: LocalDateTime!
 }
 
 input ProductFilterInput {
@@ -78,7 +86,8 @@ input ProductFilterInput {
 
 input ProductFilterEntry {
   type: ProductFilterType!
-  values: [Object]!
+  value: Object
+  values: [Object!]
 }
 
 input ProductSortEntry {
@@ -89,7 +98,8 @@ input ProductSortEntry {
 # Подставляйте в ProductFilterEntry { values: [xxx, ...] }
 input AttributeFilterEntry {
   name: String!
-  values: [String!]!
+  value: String
+  values: [String]
 }
 
 enum Availability {
@@ -100,6 +110,7 @@ enum Availability {
 
 enum ProductFilterType {
   ID
+  CATALOG
   QUERY
   PRICE_FROM
   PRICE_TO
@@ -124,4 +135,9 @@ scalar Long
 scalar Object
 scalar BigDecimal
 scalar Date
-scalar DateTime
+scalar LocalDate
+scalar LocalDateTime
+scalar LocalTime
+scalar OffsetDateTime
+scalar YearMonth
+scalar Duration

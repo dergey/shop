@@ -1,8 +1,10 @@
 package by.sergey.zhuravlev.shop.domain
 
+import com.querydsl.core.annotations.QueryEntity
 import javax.persistence.*
 
 @Entity
+@QueryEntity
 @Table(name = "catalogs")
 data class Catalog(
 
@@ -17,7 +19,7 @@ data class Catalog(
   @JoinColumn(name = "parent_id")
   var parent: Catalog? = null,
 
-  @OneToMany(mappedBy = "catalog")
-  var attributes: List<Attribute>
+  @OneToMany(mappedBy = "id.catalog")
+  var attributes: List<CatalogAttribute>
 
 )

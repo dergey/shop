@@ -8,6 +8,9 @@ import java.math.BigDecimal
 object ProductModelFactory {
 
   fun buildProductModel(product: Product, discount: Discount?): ProductModel {
+    if (product.id == null) {
+      throw IllegalArgumentException("Product not created")
+    }
     val originalPrice = buildPriceString(product.price, product.priceCurrency)
     return ProductModel(
       id = product.id!!,

@@ -11,6 +11,9 @@ object ImageModelFactory {
   }
 
   fun buildImageModel(image: Image): ImageModel {
+    if (image.id == null) {
+      throw IllegalArgumentException("Image not created")
+    }
     return ImageModel(
       id = image.id!!,
       mimeType = image.mimeType,

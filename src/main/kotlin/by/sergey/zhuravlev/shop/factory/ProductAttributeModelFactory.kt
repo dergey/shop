@@ -7,8 +7,8 @@ object ProductAttributeModelFactory {
 
   fun buildProductAttributeModel(attributeValue: ProductAttributeValue): ProductAttributeModel {
     return ProductAttributeModel(
-      name = attributeValue.id.attributeValue.attribute.title,
-      value = attributeValue.id.attributeValue.value
+      name = attributeValue.id.catalogAttributeValue.id.attribute?.title ?: throw IllegalArgumentException("attribute"),
+      value = attributeValue.id.catalogAttributeValue.id.value
     )
   }
 
