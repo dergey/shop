@@ -17,7 +17,35 @@ type Query {
 }
 
 type Mutation {
+  registrationStart(phoneOrEmail: String!): RegistrationStep!
+  registrationConfirmByCode(continuationCode: String!, manualCode: String!): RegistrationStep!
+  registrationConfirmByLink(linkCode: String!): RegistrationStep!
+  registrationConfirmResend(continuationCode: String!): RegistrationStep!
+  registrationFinish(continuationCode: String!, userData: RegistrationData!): User!
   addProductToUserCart(userId: Long!, productId: Long!): Cart!
+}
+
+type User {
+  email: String
+  phone: String
+  avatar: Image
+  firstName: String!
+  middleName: String
+  secondName: String!
+  createAt: LocalDateTime!
+  addresses: [Address!]!
+}
+
+type Address {
+  country: String
+  region: String
+  city: String
+  street: String
+  home: Int
+  flat: Int
+  floor: Int
+  entrance: Int
+  zipCode: String
 }
 
 type Cart {
@@ -62,7 +90,6 @@ type Attribute {
 type Catalog {
   id: Long!
   name: String!
-  # todo Разве удобно? Стоит передавать как список! GraphQL не позволяет сделать это вложенной структурой?
   parent: Catalog
   children: [Catalog!]!
   attributes: [Attribute!]!
@@ -95,11 +122,22 @@ input ProductSortEntry {
   order: SortOrder!
 }
 
-# Подставляйте в ProductFilterEntry { values: [xxx, ...] }
 input AttributeFilterEntry {
   name: String!
   value: String
   values: [String]
+}
+
+type RegistrationStep {
+  status: RegistrationStatus!
+  continuationCode: String!
+}
+
+input RegistrationData {
+  password: String!
+  firstName: String!
+  middleName: String!
+  secondName: String!
 }
 
 enum Availability {
@@ -129,6 +167,13 @@ enum ProductSortField {
 enum SortOrder {
   ASC
   DESC
+}
+
+enum RegistrationStatus {
+  EMAIL_CONFIRMATION
+  PHONE_CONFIRMATION
+  PERSONAL_DATA_AWAIT
+  FAIL
 }
 
 scalar Long

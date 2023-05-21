@@ -1,10 +1,11 @@
 package by.sergey.zhuravlev.shop.service
 
-import by.sergey.zhuravlev.shop.exception.NotFoundException
+import by.sergey.zhuravlev.shop.exception.ShopServiceException
 import by.sergey.zhuravlev.shop.factory.AttributeModelFactory.buildAttributeModel
 import by.sergey.zhuravlev.shop.factory.CatalogModelFactory.buildCatalogModel
 import by.sergey.zhuravlev.shop.model.AttributeModel
 import by.sergey.zhuravlev.shop.model.CatalogModel
+import by.sergey.zhuravlev.shop.model.ErrorCode
 import by.sergey.zhuravlev.shop.repository.CatalogAttributeRepository
 import by.sergey.zhuravlev.shop.repository.CatalogRepository
 import org.springframework.stereotype.Service
@@ -20,14 +21,14 @@ class CatalogService(
   fun getRootCatalog(): CatalogModel {
     return catalogRepository.findCatalogWithNullParent()
       ?.let { buildCatalogModel(it) }
-      ?: throw NotFoundException()
+      ?: throw ShopServiceException(ErrorCode.NOT_FOUND)
   }
 
   @Transactional(readOnly = true)
   fun getCatalog(catalogId: Long): CatalogModel {
     return catalogRepository.findCatalogById(catalogId)
       ?.let { buildCatalogModel(it) }
-      ?: throw NotFoundException()
+      ?: throw ShopServiceException(ErrorCode.NOT_FOUND)
   }
 
   @Transactional(readOnly = true)

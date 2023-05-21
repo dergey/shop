@@ -20,6 +20,19 @@ data class User(
   @Column(name = "password", length = 60, nullable = false)
   var password: String,
 
+  @Column(name = "first_name", nullable = false)
+  var firstName: String,
+
+  @Column(name = "middle_name")
+  var middleName: String? = null,
+
+  @Column(name = "second_name", nullable = false)
+  var secondName: String,
+
+  @ManyToOne
+  @JoinColumn(name = "avatar")
+  var avatar: Image? = null,
+
   @ManyToMany
   @JoinTable(
     name = "user_addresses",

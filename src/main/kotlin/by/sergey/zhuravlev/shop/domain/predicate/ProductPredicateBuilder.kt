@@ -146,9 +146,9 @@ class ProductPredicateBuilder {
   }
 
   fun withEntries(entries: List<ProductFilterEntry>): ProductPredicateBuilder {
-    for (entry in entries) {
-      withEntry(entry)
-    }
+    entries
+      .associateBy { it.type }
+      .forEach { (_, value) -> withEntry(value) }
     return this
   }
 

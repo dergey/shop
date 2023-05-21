@@ -1,7 +1,7 @@
 package by.sergey.zhuravlev.shop.service
 
 import by.sergey.zhuravlev.shop.domain.predicate.ProductPredicateBuilder
-import by.sergey.zhuravlev.shop.exception.NotFoundException
+import by.sergey.zhuravlev.shop.exception.ShopServiceException
 import by.sergey.zhuravlev.shop.factory.CatalogModelFactory.buildCatalogModel
 import by.sergey.zhuravlev.shop.factory.ImageModelFactory.buildImageModel
 import by.sergey.zhuravlev.shop.factory.ProductAttributeModelFactory.buildProductAttributeModel
@@ -34,7 +34,7 @@ class ProductService(
       ?.let { (product, discount) ->
         buildProductModel(product, discount)
       }
-      ?: throw NotFoundException()
+      ?: throw ShopServiceException(ErrorCode.NOT_FOUND)
   }
 
   @Transactional(readOnly = true)
@@ -87,7 +87,7 @@ class ProductService(
   fun getProductCatalog(productId: Long): CatalogModel {
     return catalogRepository.findProductCatalogByProductId(productId)
       ?.let { buildCatalogModel(it) }
-      ?: throw NotFoundException()
+      ?: throw ShopServiceException(ErrorCode.NOT_FOUND)
   }
 
   @Transactional(readOnly = true)

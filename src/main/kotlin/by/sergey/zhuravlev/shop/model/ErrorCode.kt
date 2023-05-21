@@ -1,0 +1,12 @@
+package by.sergey.zhuravlev.shop.model
+
+enum class ErrorCode {
+  NOT_VALID,
+  NOT_FOUND,
+  ALREADY_EXIST,
+  INVALID_NEW_USER_STATE,
+  INVALID_EMAIL_OR_PHONE_FORMAT,
+
+  CONFIRMATION_HAS_EXPIRED,
+  TOO_MANY_CONFIRMATION_TRIES
+}
